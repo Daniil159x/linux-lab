@@ -1,0 +1,9 @@
+.main.o.d
+.vscode
+*.cmd
+*.o
+*.mod
+*.ko
+*.order
+Module.symvers
+guess_game.mod.c

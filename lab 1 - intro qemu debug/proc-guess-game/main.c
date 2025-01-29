@@ -9,8 +9,7 @@
 #include <linux/random.h>
 #include <linux/kstrtox.h>
 
-enum state
-{
+enum state {
     BEGIN = 0,
     LOH = 1,
     GOOD = 2,
@@ -21,19 +20,15 @@ enum state current_state = BEGIN;
 
 static ssize_t guess_write(struct file *file, const char __user *ubuf, size_t count, loff_t *ppos)
 {
-
     unsigned int user_number = 0;
     int rc = kstrtouint_from_user(ubuf, count, 10, &user_number);
     if (rc != 0)
         return rc;
 
-    if (user_number == current_number)
-    {
+    if (user_number == current_number) {
         current_state = GOOD;
         current_number = get_random_u32();
-    }
-    else
-    {
+    } else {
         current_state = LOH;
     }
 
@@ -50,8 +45,7 @@ static ssize_t guess_read(struct file *file, char __user *ubuf, size_t count, lo
     const char *str = prompt;
     size_t str_len = sizeof(prompt);
 
-    switch (current_state)
-    {
+    switch (current_state) {
     case LOH:
         str = loh;
         str_len = sizeof(loh);
